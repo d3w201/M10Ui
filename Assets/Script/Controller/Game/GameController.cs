@@ -9,6 +9,7 @@ namespace Script.Controller.Game
     {
         //Private-props
         private GameStatus _gameStatus;
+        
         //Start
         private new void Start()
         {

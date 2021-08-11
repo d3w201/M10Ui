@@ -31,7 +31,7 @@ namespace Script.Controller.Input
             MoveInput(value.Get<Vector2>());
             if (GameStatus.Inventory.Equals(GameController.GetStatus()))
             {
-                SelectItemController.HandleMove();
+                InventoryController.HandleMove();
             }
         }
 

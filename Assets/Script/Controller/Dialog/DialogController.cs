@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Controller;
 using Entity.Dialog;
 using Enumeral;
 using Script.Enumeral;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Controller.Dialog
+namespace Script.Controller.Dialog
 {
     public class DialogController : RootController
     {
@@ -35,11 +34,6 @@ namespace Controller.Dialog
             base.Start();
             Hide();
         }
-
-        /*private void Update()
-        {
-            debug = EventSystem.currentSelectedGameObject?.name;
-        }*/
 
         //Public Method
         public void Show(List<DialogData> data)

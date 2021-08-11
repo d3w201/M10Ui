@@ -1,6 +1,6 @@
 ﻿using Controller.Camera;
-using Controller.Dialog;
 using Controller.Player;
+using Script.Controller.Dialog;
 using Script.Controller.Game;
 using Script.Controller.Input;
 using Script.Controller.Items;

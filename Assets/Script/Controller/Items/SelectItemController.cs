@@ -2,14 +2,11 @@
 using Controller;
 using Script.Utils;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Script.Controller.Items
 {
     public class SelectItemController : RootController
     {
-        public float highlightDuration = 3;
-
         #region Props
 
         private float _y;
@@ -40,7 +37,6 @@ namespace Script.Controller.Items
             var localPosition = _parent.localPosition;
             _y = localPosition.y;
             _z = localPosition.z;
-            
             _parent.localPosition = new Vector3(0, _y, _z);
         }
 
