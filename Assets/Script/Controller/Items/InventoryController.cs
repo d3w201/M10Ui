@@ -119,7 +119,7 @@ namespace Script.Controller.Items
                 obj.layer = 5;
                 var item = obj.transform;
                 item.SetParent(selector.transform);
-                item.localScale = defaultScale;
+                item.localScale = ChiuskyController.Inventory.CurrentIndex != i ? defaultScale : _highlightedScale;
                 item.localPosition = new Vector3(i * adjacentDistance, 0, -250);
                 item.localRotation = Quaternion.identity;
                 item.name = obj.name;
