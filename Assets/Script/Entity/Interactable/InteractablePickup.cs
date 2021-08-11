@@ -1,15 +1,14 @@
-﻿using UnityEngine;
+﻿using Script.Entity.Item;
+using UnityEngine;
 
 namespace Script.Entity.Interactable
 {
     public class InteractablePickup :InteractableGeneric
     {
-        public string ItemName;
-        public string Details ;
         public override void DoInteract()
         {
             Debug.Log(this.gameObject.name);
-            ChiuskyCtrl.inventory.Add(this.gameObject);
+            ChiuskyCtrl.Inventory.Add(this.gameObject.GetComponent<GenericItem>());
             base.DoInteract();
             this.gameObject.SetActive(false);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Controller;
+using Script.Entity.Item;
 using Script.Enumeral;
 using Script.Utils;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace Script.Controller.Items
         private float _y;
         private float _z;
         private Vector3 _highlightedScale;
-        private CircularList<GameObject> _selectableItemList; 
+        private CircularList<GenericItem> _selectableItemList; 
         public GameObject currentActiveItem;
 
         //Start
@@ -88,9 +89,9 @@ namespace Script.Controller.Items
         
         private void LoadItems()
         {
-            _selectableItemList ??= new CircularList<GameObject>();
-            if (ChiuskyController.inventory == null || ChiuskyController.inventory.Count <= 0) return;
-            SetActiveItem(ChiuskyController.inventory.Current);
+            _selectableItemList ??= new CircularList<GenericItem>();
+            if (ChiuskyController.Inventory == null || ChiuskyController.Inventory.Count <= 0) return;
+            SetActiveItem(ChiuskyController.Inventory.Current.gameObject);
             SpawnAllItems();
         }
         
@@ -110,9 +111,9 @@ namespace Script.Controller.Items
 
         private void SpawnAllItems()
         {
-            for (var i = 0; i < ChiuskyController.inventory.Count; i++)
+            for (var i = 0; i < ChiuskyController.Inventory.Count; i++)
             {
-                var obj = Instantiate(ChiuskyController.inventory[i]);
+                var obj = Instantiate(ChiuskyController.Inventory[i].gameObject);
                 if (obj is null) continue;
                 obj.SetActive(true);
                 obj.layer = 5;
@@ -122,7 +123,7 @@ namespace Script.Controller.Items
                 item.localPosition = new Vector3(i * adjacentDistance, 0, -250);
                 item.localRotation = Quaternion.identity;
                 item.name = obj.name;
-                _selectableItemList.Add(item.gameObject);
+                _selectableItemList.Add(item.gameObject.GetComponent<GenericItem>());
             }
         }
         

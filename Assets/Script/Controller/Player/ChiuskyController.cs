@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using Enumeral;
+using Controller.Player;
 using Script.Entity.Interface;
+using Script.Entity.Item;
 using Script.Enumeral;
 using Script.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Controller.Player
+namespace Script.Controller.Player
 {
     [RequireComponent(typeof(CharacterController))]
     public class ChiuskyController : PlayerController
@@ -22,25 +21,23 @@ namespace Controller.Player
         [Tooltip("How fast the character turns to face movement direction")] [Range(0.0f, 0.3f)]
         public float rotationSmoothTime = 0.12f;
 
-        public CircularList<GameObject> inventory;
+        public CircularList<GenericItem> Inventory;
         
         //Awake
         private void OnEnable()
         {
-            inventory ??= new CircularList<GameObject>();
+            Inventory ??= new CircularList<GenericItem>();
         }
 
         //Update
         private void Update()
         {
             //Debug.Log(EventSystem.currentSelectedGameObject?.name);
-            if (GameStatus.Play.Equals(GameController.GetStatus()))
+            if (!GameStatus.Play.Equals(GameController.GetStatus())) return;
+            HandleGravity();
+            if (!hold)
             {
-                HandleGravity();
-                if (!hold)
-                {
-                    HandleMovement();
-                }
+                HandleMovement();
             }
         }
 
@@ -121,7 +118,7 @@ namespace Controller.Player
             {
                 targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                  CameraController.GetFixedPosition();
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
+                var rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
                     rotationSmoothTime);
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }

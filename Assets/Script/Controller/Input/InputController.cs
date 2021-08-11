@@ -82,7 +82,7 @@ namespace Script.Controller.Input
             }
         }
 
-        public void MoveInput(Vector2 newMoveDirection)
+        private void MoveInput(Vector2 newMoveDirection)
         {
             move = newMoveDirection;
         }

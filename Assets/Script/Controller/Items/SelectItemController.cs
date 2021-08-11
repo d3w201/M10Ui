@@ -59,18 +59,18 @@ namespace Script.Controller.Items
             {
                 _selectableItemList = new CircularList<Transform>();
             }
-            if (ChiuskyController.inventory != null && ChiuskyController.inventory.Count > 0)
+            if (ChiuskyController.Inventory != null && ChiuskyController.Inventory.Count > 0)
             {
-                SetActiveItem(ChiuskyController.inventory.Current);
+                SetActiveItem(ChiuskyController.Inventory.Current.gameObject);
                 SpawnAllItems();
             }
         }
 
         private void SpawnAllItems()
         {
-            for (var i = 0; i < ChiuskyController.inventory.Count; i++)
+            for (var i = 0; i < ChiuskyController.Inventory.Count; i++)
             {
-                var obj = Instantiate(ChiuskyController.inventory[i]);
+                var obj = Instantiate(ChiuskyController.Inventory[i].gameObject);
                 if (obj is null) continue;
                 obj.SetActive(true);
                 obj.layer = 5;

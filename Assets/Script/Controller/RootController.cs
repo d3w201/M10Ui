@@ -4,6 +4,7 @@ using Script.Controller.Dialog;
 using Script.Controller.Game;
 using Script.Controller.Input;
 using Script.Controller.Items;
+using Script.Controller.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

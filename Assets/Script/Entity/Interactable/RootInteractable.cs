@@ -1,4 +1,5 @@
 ﻿using Controller.Player;
+using Script.Controller.Player;
 using UnityEngine;
 
 namespace Script.Entity.Interactable

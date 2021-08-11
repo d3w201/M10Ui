@@ -2,7 +2,7 @@
 
 namespace Script.Entity.Item
 {
-    public class ItemGeneric : MonoBehaviour
+    public class GenericItem : MonoBehaviour
     {
         
     }
