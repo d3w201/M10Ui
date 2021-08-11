@@ -27,10 +27,8 @@ namespace Script.Controller.Items
         #region Init
 
         //Init
-        private new void Start()
+        private void Start()
         {
-            base.Start();
-            
             SetupReferences();
             
             _highlightedscale = defaultscale * highlightedscalefactor;

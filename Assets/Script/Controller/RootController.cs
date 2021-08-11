@@ -1,5 +1,5 @@
-﻿using Controller.Camera;
-using Controller.Player;
+﻿using Controller.Player;
+using Script.Controller.Camera;
 using Script.Controller.Dialog;
 using Script.Controller.Game;
 using Script.Controller.Input;
@@ -85,11 +85,8 @@ namespace Controller
             {
                 InventoryManager = GameObject.FindGameObjectWithTag("InventoryManager");
             }
-        }
-
-        //Start
-        protected void Start()
-        {
+            
+            //Components
             InputController = InputManager.GetComponent<InputController>();
             ChiuskyController = Chiusky.GetComponent<ChiuskyController>();
             Animator = Chiusky.GetComponent<Animator>();
@@ -101,13 +98,7 @@ namespace Controller
             InteractableController = GameManager.GetComponent<InteractableController>();
             InventoryController = InventoryManager.GetComponent<InventoryController>();
             SelectItemController = InventoryUI.GetComponent<SelectItemController>();
-
-            AssignAnimationIDs();
-        }
-
-        //Private-methods
-        private void AssignAnimationIDs()
-        {
+            
             AnimIDSpeed = Animator.StringToHash("speed");
             AnimIDAim = Animator.StringToHash("aim");
             AnimIDAttack = Animator.StringToHash("attack");

@@ -1,9 +1,10 @@
 using System;
+using Controller;
 using Entity.Cameras;
 using Script.Controller.Input;
 using UnityEngine;
 
-namespace Controller.Camera
+namespace Script.Controller.Camera
 {
     public class CameraController : RootController
     {
@@ -11,9 +12,8 @@ namespace Controller.Camera
         private float _fixedPosition;
 
         //Awake
-        private new void Awake()
+        private void Start()
         {
-            base.Awake();
             FixPos();
             SpawnCamera.Triggered += HandleChangeCamera;
             InputController.OnStop += HandleUpdateCamera;
@@ -34,7 +34,7 @@ namespace Controller.Camera
             FixPos();
         }
 
-        //Private methods
+        //Private-methods
         private void FixPos()
         {
             if (Math.Abs(_fixedPosition - this.transform.eulerAngles.y) > 0)

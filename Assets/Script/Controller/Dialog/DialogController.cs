@@ -29,9 +29,8 @@ namespace Script.Controller.Dialog
         private Coroutine _printingRoutine;
 
         //Start
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             Hide();
         }
 
@@ -217,8 +216,6 @@ namespace Script.Controller.Dialog
 
                     case Command.wait:
                         yield return new WaitForSeconds(float.Parse(item.Context));
-                        break;
-                    default:
                         break;
                 }
             }

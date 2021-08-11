@@ -27,10 +27,8 @@ namespace Script.Controller.Items
         public GameObject currentActiveItem;
 
         //Start
-        private new void Start()
+        private void OnEnable()
         {
-            base.Start();
-
             var localPosition = selector.transform.localPosition;
             _y = localPosition.y;
             _z = localPosition.z;

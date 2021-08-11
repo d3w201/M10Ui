@@ -9,22 +9,24 @@ namespace Script.Controller.Game
     {
         //Private-props
         private GameStatus _gameStatus;
-        
+
         //Start
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             Resume();
         }
+
         //Getter & Setter
         public void SetStatus(GameStatus status)
         {
             _gameStatus = status;
         }
+
         public GameStatus GetStatus()
         {
             return _gameStatus;
         }
+
         //Public-methods
         public void HandlePause(InputValue value)
         {
@@ -37,6 +39,7 @@ namespace Script.Controller.Game
                 Pause();
             }
         }
+
         //Private-methods
         private void Pause()
         {
@@ -44,6 +47,7 @@ namespace Script.Controller.Game
             Time.timeScale = 0f;
             SetStatus(GameStatus.Pause);
         }
+
         private void Resume()
         {
             PauseUI.SetActive(false);

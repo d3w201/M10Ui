@@ -10,10 +10,10 @@ namespace Script.Controller.Items
 {
     public class InteractableController : RootController
     {
-        //private props
+        //Private-props
         private IInteractable _item;
         
-        //public-methods
+        //Public-methods
         public void DoInteract(Action callback)
         {
             GameController.SetStatus(GameStatus.Interact);
@@ -27,8 +27,7 @@ namespace Script.Controller.Items
             };
             DialogController.Show(dialogData);
         }
-
-        //handlers
+        
         public void HandleInteract(InputValue value)
         {
             DialogController.Click_Window();
