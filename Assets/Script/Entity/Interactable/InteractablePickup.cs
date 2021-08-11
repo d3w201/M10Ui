@@ -7,9 +7,7 @@ namespace Script.Entity.Interactable
     {
         public override void DoInteract()
         {
-            Debug.Log(this.gameObject.name);
             ChiuskyCtrl.Inventory.Add(this.gameObject.GetComponent<GenericItem>());
-            base.DoInteract();
             this.gameObject.SetActive(false);
         }
     }

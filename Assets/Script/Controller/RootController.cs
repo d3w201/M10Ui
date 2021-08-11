@@ -1,6 +1,5 @@
-﻿using Controller.Camera;
-using Controller.Dialog;
-using Controller.Player;
+﻿using Script.Controller.Camera;
+using Script.Controller.Dialog;
 using Script.Controller.Game;
 using Script.Controller.Input;
 using Script.Controller.Items;
@@ -8,7 +7,7 @@ using Script.Controller.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Controller
+namespace Script.Controller
 {
     public class RootController : MonoBehaviour
     {
@@ -34,7 +33,6 @@ namespace Controller
         protected EventSystem EventSystem;
         protected InteractableController InteractableController;
         protected InventoryController InventoryController;
-        protected SelectItemController SelectItemController;
 
         //AnimationID
         protected int AnimIDSpeed;
@@ -98,7 +96,6 @@ namespace Controller
             EventSystem = EventSystemGameObject.GetComponent<EventSystem>();
             InteractableController = GameManager.GetComponent<InteractableController>();
             InventoryController = InventoryManager.GetComponent<InventoryController>();
-            SelectItemController = InventoryUI.GetComponent<SelectItemController>();
             
             AnimIDSpeed = Animator.StringToHash("speed");
             AnimIDAim = Animator.StringToHash("aim");

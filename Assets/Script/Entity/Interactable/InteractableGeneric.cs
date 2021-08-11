@@ -1,23 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entity.Dialog;
 using Script.Entity.Interface;
+using Script.Entity.Item;
 using UnityEngine;
 
 namespace Script.Entity.Interactable
 {
-    public class InteractableGeneric :RootInteractable, IInteractable
+    public abstract class InteractableGeneric :RootInteractable, IInteractable
     {
-        public virtual void DoInteract()
+        private GenericItem _item; 
+        private void Start()
         {
-            Debug.Log("end interaction");
+            _item = gameObject.GetComponent<GenericItem>();
         }
+
+        public abstract void DoInteract();
 
         public List<DialogData> GetDialogData()
         {
-            var dialogList = new List<DialogData>();
-            var text1 = new DialogData(this.tag);
-            dialogList.Add(text1);
-            return dialogList;
+            return new List<DialogData>
+            {
+                new DialogData(_item.interactText)
+            };
         }
     }
 }

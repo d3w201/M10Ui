@@ -11,9 +11,9 @@ namespace Script.Controller.Camera
         //Private-props
         private float _fixedPosition;
 
-        //Awake
-        private void Start()
+        private new void Awake()
         {
+            base.Awake();
             FixPos();
             SpawnCamera.Triggered += HandleChangeCamera;
             InputController.OnStop += HandleUpdateCamera;

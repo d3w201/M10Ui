@@ -12,8 +12,7 @@ namespace Script.Controller.Items
     {
         
         //Public-props
-        [Header("Selector")] public GameObject selector;
-        [Header("Selectable")] public GameObject selectable;
+        [Header("Selector")] public GameObject selectorUI;
         [Header("Default Item Distance")] public int adjacentDistance = 500;
         [Header("Default Item Scale")] public Vector3 defaultScale = new Vector3(100, 100, 100);
         [Header("Default Highlight Multiplier")] public float highlightedScaleFactor = 2.5f;
@@ -30,10 +29,10 @@ namespace Script.Controller.Items
         //Start
         private void OnEnable()
         {
-            var localPosition = selector.transform.localPosition;
+            var localPosition = selectorUI.transform.localPosition;
             _y = localPosition.y;
             _z = localPosition.z;
-            selector.transform.localPosition = new Vector3(0, _y, _z);
+            selectorUI.transform.localPosition = new Vector3(0, _y, _z);
             _highlightedScale = defaultScale * highlightedScaleFactor;
 
             Resume();
@@ -76,13 +75,16 @@ namespace Script.Controller.Items
         //Private-methods
         private void Resume()
         {
+            DestroyAllItems();
             InventoryUI.SetActive(false);
             GameController.SetStatus(GameStatus.Play);
+            Time.timeScale = 1f;
         }
 
         private void Inventory()
         {
             GameController.SetStatus(GameStatus.Inventory);
+            Time.timeScale = 0.1f;
             InventoryUI.SetActive(true);
             LoadItems();
         }
@@ -91,26 +93,12 @@ namespace Script.Controller.Items
         {
             _selectableItemList ??= new CircularList<GenericItem>();
             if (ChiuskyController.Inventory == null || ChiuskyController.Inventory.Count <= 0) return;
-            SetActiveItem(ChiuskyController.Inventory.Current.gameObject);
             SpawnAllItems();
-        }
-        
-        private void SetActiveItem(GameObject item)
-        {
-            if (currentActiveItem != null)
-                Destroy(currentActiveItem.gameObject);
-
-            currentActiveItem = Instantiate(item, selectable.transform, true);
-            currentActiveItem.gameObject.SetActive(true);
-            currentActiveItem.gameObject.layer = 5;
-            currentActiveItem.transform.localScale = defaultScale;
-            currentActiveItem.transform.localPosition = new Vector3(0, 0, -250);
-            currentActiveItem.transform.localRotation = Quaternion.identity;
-            currentActiveItem.name = item.name;
         }
 
         private void SpawnAllItems()
         {
+            if (ChiuskyController.Inventory == null) return;
             for (var i = 0; i < ChiuskyController.Inventory.Count; i++)
             {
                 var obj = Instantiate(ChiuskyController.Inventory[i].gameObject);
@@ -118,7 +106,7 @@ namespace Script.Controller.Items
                 obj.SetActive(true);
                 obj.layer = 5;
                 var item = obj.transform;
-                item.SetParent(selector.transform);
+                item.SetParent(selectorUI.transform);
                 item.localScale = ChiuskyController.Inventory.CurrentIndex != i ? defaultScale : _highlightedScale;
                 item.localPosition = new Vector3(i * adjacentDistance, 0, -250);
                 item.localRotation = Quaternion.identity;
@@ -127,16 +115,22 @@ namespace Script.Controller.Items
             }
         }
         
+        private void DestroyAllItems()
+        {
+            _selectableItemList?.ForEach(item => Destroy(item.gameObject));
+            _selectableItemList?.Clear();
+        }
+        
         // L E R P
         private IEnumerator Lerp(int direction)
         {
-            Debug.Log("lerping ..." + direction);
+            if (_selectableItemList == null || _selectableItemList.Count <= 0) yield break;
             float timeElapsed = 0;
             var currentItemPosition = -_selectableItemList.Current.transform.localPosition.x;
             var nextItemPosition = direction > 0 ? -_selectableItemList.Next.transform.localPosition.x : -_selectableItemList.Previous.transform.localPosition.x;
 
-            SetActiveItem(
-                direction > 0 ? _selectableItemList.MoveNext.gameObject : _selectableItemList.MovePrevious.gameObject);
+            /*SetActiveItem(
+                direction > 0 ? _selectableItemList.MoveNext.gameObject : _selectableItemList.MovePrevious.gameObject);*/
 
             var currentItem = _selectableItemList.Current;
             var previousItem = direction > 0 ? _selectableItemList.Previous : _selectableItemList.Next;
@@ -144,7 +138,6 @@ namespace Script.Controller.Items
             //il lerping finisce prima dello scadere della durata
             while (timeElapsed < duration)
             {
-                Debug.Log(timeElapsed / duration);
                 previousItem.transform.localScale = Vector3.Lerp(
                     _highlightedScale,
                     defaultScale,
@@ -155,7 +148,7 @@ namespace Script.Controller.Items
                     _highlightedScale,
                     timeElapsed / duration);
 
-                selector.transform.localPosition = Vector3.Lerp(
+                selectorUI.transform.localPosition = Vector3.Lerp(
                     new Vector3(currentItemPosition, _y,_z),
                     new Vector3(nextItemPosition, _y, _z),
                     timeElapsed / duration);
@@ -163,7 +156,6 @@ namespace Script.Controller.Items
                 timeElapsed += Time.deltaTime;
                 yield return null;
             }
-            Debug.Log("end lerping ..." + direction);
         }
     }
 }
