@@ -8,7 +8,9 @@ namespace Script.Entity.Interactable
         public override void DoInteract()
         {
             ChiuskyCtrl.Inventory.Add(this.gameObject.GetComponent<GenericItem>());
+            ChiuskyCtrl.SetFocusItem(null);
             this.gameObject.SetActive(false);
+            
         }
     }
 }
